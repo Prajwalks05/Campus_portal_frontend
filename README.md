@@ -1,203 +1,246 @@
-# BMSCE Campus Portal
+# 🎓 TechVerse Campus Portal
 
-A modern, responsive web application for BMSCE campus management with comprehensive student portal features.
+A modern, glassmorphic student portal built with Next.js 14+, TypeScript, and TurboRepo. This project replicates the functionality of a student management system with a beautiful, responsive UI.
 
-## 🚀 Features
+## ✨ Features
 
-- **Authentication System** - Sign in/Sign up with modern UI
-- **Dashboard Overview** - Personalized student dashboard
-- **CIE Marks Management** - Detailed marks tracking with visual indicators
-- **Attendance Tracking** - Subject-wise attendance monitoring
-- **Courses Management** - Course information with credits
-- **Fees Management** - Detailed fee structure and payment tracking
-- **Online Payments** - Multiple payment options integration
-- **Proctor Diary** - Student and proctor information management
-- **Dark Mode Support** - Toggle between light and dark themes
-- **Real-time Notifications** - Live notification system
-- **Responsive Design** - Works on all devices
+- **🔐 Secure Login System** - Student authentication with USN and password
+- **📊 Interactive Dashboard** - Overview of attendance, grades, fees, and courses
+- **📚 Course Management** - View enrolled courses with faculty information
+- **💰 Fee Management** - Track fee payments and download receipts
+- **📅 Attendance Tracking** - Monitor attendance across all subjects
+- **🎯 CIE Marks** - View Continuous Internal Evaluation scores
+- **👨‍🏫 Proctor Diary** - Access personal and family information
+- **🌓 Dark/Light Mode** - Toggle between themes
+- **📱 Responsive Design** - Works on all device sizes
+- **🎨 Glassmorphic UI** - Modern, translucent design elements
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
-- **Framework**: Next.js 15 with App Router
+- **Framework**: Next.js 14+ with App Router
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
+- **Styling**: TailwindCSS with custom glassmorphic theming
+- **UI Components**: ShadCN UI (Radix UI primitives)
+- **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **Theme**: next-themes
-- **Notifications**: Sonner
+- **Package Manager**: Bun
+- **Monorepo**: TurboRepo
+- **Linting**: ESLint + Prettier
 
-## 📋 Prerequisites
+## 🏗️ Project Structure
 
-Before running this project, make sure you have:
+```
+├── apps/
+│   └── web/                 # Next.js application
+│       ├── app/            # App router pages
+│       │   ├── dashboard/  # Dashboard pages
+│       │   ├── layout.tsx  # Root layout
+│       │   └── page.tsx    # Login page
+│       ├── components/     # React components
+│       │   ├── ui/        # ShadCN UI components
+│       │   ├── header.tsx # Navigation header
+│       │   └── sidebar.tsx# Sidebar navigation
+│       ├── data/          # Mock data files
+│       ├── lib/           # Utility functions
+│       └── public/        # Static assets
+├── packages/              # Shared packages (future)
+├── turbo.json            # TurboRepo configuration
+└── package.json          # Root package.json
+```
 
-- **Node.js** (version 18 or higher)
-- **npm** or **yarn** package manager
-- **Git** for version control
+## 🚀 Quick Start
 
-## 🚀 Getting Started
+### Prerequisites
 
-### 1. Clone the Repository
+- **Node.js** (v18 or higher)
+- **Bun** (recommended package manager)
 
-\`\`\`bash
-git clone https://github.com/your-username/Campus_portal_frontend.git
-cd Campus_portal_frontend
-\`\`\`
+### Installation
 
-### 2. Install Dependencies
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd campus-portal-monorepo
+   ```
 
-\`\`\`bash
-npm install
-# or
-yarn install
-\`\`\`
+2. **Run the setup script**
+   ```bash
+   ./setup.sh
+   ```
 
-### 3. Run the Development Server
+3. **Start the development server**
+   ```bash
+   bun dev
+   ```
 
-\`\`\`bash
-npm run dev
-# or
-yarn dev
-\`\`\`
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-### 4. Open in Browser
+### Manual Installation (Alternative)
 
-Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
+If you prefer manual setup:
 
-## 📁 Project Structure
+```bash
+# Install dependencies
+bun install
 
-\`\`\`
-├── app/                    # Next.js App Router pages
-│   ├── dashboard/         # Dashboard pages
-│   │   ├── attendance/    # Attendance page
-│   │   ├── cie/          # CIE marks page
-│   │   ├── courses/      # Courses page
-│   │   ├── fees/         # Fees page
-│   │   ├── payments/     # Online payments page
-│   │   └── proctor/      # Proctor diary page
-│   ├── sign-up/          # Sign up page
-│   ├── globals.css       # Global styles
-│   ├── layout.tsx        # Root layout
-│   └── page.tsx          # Home/Sign in page
-├── components/            # Reusable components
-│   ├── auth/             # Authentication components
-│   ├── dashboard/        # Dashboard components
-│   ├── ui/               # shadcn/ui components
-│   └── theme-provider.tsx
-├── hooks/                # Custom React hooks
-├── lib/                  # Utility functions
-└── public/               # Static assets
-\`\`\`
+# Install web app dependencies
+cd apps/web && bun install && cd ../..
 
-## 🎨 Key Features Explained
+# Start development server
+bun dev
+```
 
-### Authentication
-- Modern sign-in/sign-up forms with validation
-- Responsive design with gradient backgrounds
-- Form validation with proper error handling
+## 📱 Pages & Features
 
-### Dashboard
-- Personalized welcome message
-- Quick stats overview (Attendance, CIE Average, Fees, Courses)
-- Recent activity tracking
-- Important resources access
-- Quick action cards
+### 🔑 Login Page
+- Modern glassmorphic login form
+- Illustration on the left side
+- Form validation
+- Responsive design
 
-### CIE Marks
-- Comprehensive marks table with color-coded performance
-- Subject-wise breakdown (CIE-1, CIE-2, CIE-3, Lab marks)
-- Performance indicators and status badges
-- Dark mode compatible hover states
+### 📊 Dashboard
+- Welcome message with student info
+- Metrics cards (attendance, CIE scores, fees, courses)
+- Quick action buttons
+- Animated components
 
-### Attendance
-- Subject-wise attendance tracking
-- Visual progress bars and percentage indicators
-- Attendance alerts and recommendations
-- Weekly attendance overview
-
-### Courses
-- Detailed course information with credits
-- Course type categorization (PC, BS, AE, ES, NCMC)
+### 📚 Courses Page
+- Table view of all enrolled courses
+- Course type badges (PC, BS, AE, NCMC)
 - Faculty information
-- Semester-wise course organization
+- Search and filter functionality
 
-### Fees
-- Detailed fee structure breakdown
-- Payment status tracking
-- Management quota and tuition fee sections
-- Payment history and balance information
+### 💰 Fees Page
+- Fee overview cards
+- Detailed fee structure table
+- Payment status indicators
+- Download receipt functionality
 
-### Online Payments
-- Multiple payment options
-- Transaction history
-- Payment guidelines
-- Secure payment processing interface
+### 📅 Attendance Page
+- Attendance records for all subjects
+- Color-coded status indicators
+- Overall attendance percentage
+- Eligibility status
 
-## 🌙 Dark Mode
+### 🎯 CIE Page
+- Internal assessment marks
+- Theory and lab marks breakdown
+- Eligibility status for exams
+- Performance indicators
 
-The application supports both light and dark themes:
-- Toggle button in the header
-- System preference detection
-- Smooth theme transitions
-- Consistent styling across all components
+### 👨‍🏫 Proctor Diary
+- Personal information display
+- Family details
+- Contact information
+- Address details
 
-## 📱 Responsive Design
+## 🎨 Design System
 
-- Mobile-first approach
-- Responsive navigation with collapsible sidebar
-- Adaptive layouts for tablets and desktops
-- Touch-friendly interface elements
+### Color Scheme
+- **Primary**: Blue tones for main actions
+- **Secondary**: Muted grays for secondary content
+- **Success**: Green for positive states
+- **Warning**: Yellow/Orange for attention
+- **Error**: Red for negative states
 
-## 🔔 Real-time Features
+### Typography
+- **Font**: Inter (Google Fonts)
+- **Headings**: Bold, tracking-tight
+- **Body**: Regular weight, good line-height
 
-- Live notification system
-- Real-time updates simulation
-- Toast notifications for user feedback
-- Connection status indicators
+### Components
+- **Cards**: Glassmorphic with backdrop-blur
+- **Buttons**: Rounded with hover animations
+- **Tables**: Clean, responsive with hover states
+- **Badges**: Color-coded status indicators
+
+## 🔧 Development
+
+### Available Scripts
+
+```bash
+# Development
+bun dev          # Start dev server for all apps
+bun build        # Build all applications
+bun lint         # Lint all packages
+bun clean        # Clean build artifacts
+
+# Individual app commands
+cd apps/web
+bun dev          # Start web app only
+bun build        # Build web app only
+bun lint         # Lint web app only
+```
+
+### Environment Variables
+
+Create `apps/web/.env.local`:
+
+```env
+NEXT_PUBLIC_APP_NAME="TechVerse Student Portal"
+NEXT_PUBLIC_APP_VERSION="1.0.0"
+```
+
+## � Data Structure
+
+All data is mocked and stored in the `apps/web/data/` directory:
+
+- `student.ts` - Student personal information
+- `courses.ts` - Course enrollment data
+- `fees.ts` - Fee structure and payment info
+- `attendance.ts` - Attendance records
+- `cie.ts` - Internal assessment marks
+
+## 🎭 Demo Credentials
+
+For demo purposes, any USN and password combination will work on the login page.
+
+Example:
+- **USN**: `ABC23DEF456`
+- **Password**: `password123`
 
 ## 🚀 Deployment
 
-### Deploy to Vercel (Recommended)
+### Vercel (Recommended)
 
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy with one click
+1. Connect your repository to Vercel
+2. Set the root directory to `apps/web`
+3. Deploy with default settings
 
-### Deploy to Netlify
+### Manual Deployment
 
-1. Build the project: `npm run build`
-2. Deploy the `out` folder to Netlify
+```bash
+# Build the application
+bun build
 
-### Deploy to Other Platforms
-
-The project can be deployed to any platform that supports Next.js applications.
+# Deploy the apps/web/.next folder
+```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -m 'Add feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📝 License
+## � License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## ⚠️ Disclaimer
 
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/your-username/Campus_portal_frontend/issues) page
-2. Create a new issue if your problem isn't already reported
-3. Provide detailed information about the issue
+This is a demo project created for educational purposes. All student data is fictional and generated for demonstration only. Do not use real personal information or credentials.
 
 ## 🙏 Acknowledgments
 
-- Built with [Next.js](https://nextjs.org/)
-- UI components from [shadcn/ui](https://ui.shadcn.com/)
-- Icons from [Lucide React](https://lucide.dev/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- [Next.js](https://nextjs.org/) for the amazing React framework
+- [TailwindCSS](https://tailwindcss.com/) for the utility-first CSS framework
+- [ShadCN UI](https://ui.shadcn.com/) for the component library
+- [Framer Motion](https://www.framer.com/motion/) for animations
+- [Lucide](https://lucide.dev/) for the icon library
 
 ---
 
-**BMSCE Campus Portal** - Making campus management modern and efficient! 🎓
+Built with ❤️ by the TechVerse Team
