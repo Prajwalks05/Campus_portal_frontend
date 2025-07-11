@@ -1,133 +1,181 @@
-"use client"
+"use client";
 
-import { SignInForm } from "@/components/auth/sign-in-form"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { GraduationCap } from "lucide-react"
-import Image from "next/image"
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Eye, EyeOff, School, User, Lock } from "lucide-react";
 
-export default function HomePage() {
-  const handleWebsiteClick = () => {
-    window.open("https://www.bmsce.ac.in", "_blank")
-  }
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
+export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [usn, setUsn] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Simulate login delay
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    
+    // For demo purposes, any USN/password combination works
+    router.push("/dashboard");
+  };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-3">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23E2E8F0' fillOpacity='0.3'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: "60px 60px",
-          }}
-        ></div>
-      </div>
-
-      {/* Header - Dark Blue Background */}
-      <header className="relative z-10 w-full px-6 py-5 bg-blue-900 shadow-lg">
-        <div className="flex justify-between items-center max-w-7xl mx-auto">
-          <div className="flex items-center space-x-4">
-            <div className="bg-white text-blue-900 p-2.5 rounded-xl shadow-md">
-              <GraduationCap className="h-7 w-7" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-white">BMSCE CAMPUS</h1>
-              <p className="text-sm text-blue-100 font-medium">Student Portal</p>
-            </div>
-          </div>
-          <Button
-            onClick={handleWebsiteClick}
-            variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-blue-900 bg-transparent font-semibold px-8 py-2 transition-all duration-200"
-          >
-            WEBSITE
-          </Button>
-        </div>
-      </header>
-
-      {/* Main Content - White Background */}
-      <div className="relative flex min-h-[calc(100vh-88px)] bg-white">
-        {/* Left Side - White Background */}
-        <div className="hidden lg:flex lg:w-3/5 flex-col justify-center items-center px-12 xl:px-16 bg-white relative overflow-hidden">
-          {/* Very Subtle Background Elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gray-50 rounded-full -translate-y-48 translate-x-48 opacity-20"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gray-50 rounded-full translate-y-32 -translate-x-32 opacity-20"></div>
-
-          <div className="relative z-10 max-w-xl text-center">
-            {/* Clean White Illustration */}
-            <div className="mb-12">
-              <div className="relative w-full max-w-md mx-auto">
-                <Image
-                  src="/images/clean-white-illustration.png"
-                  alt="Student working on campus portal"
-                  width={400}
-                  height={320}
-                  className="w-full h-auto"
-                  priority
-                />
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
+        {/* Illustration Side */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="hidden lg:flex flex-col items-center justify-center space-y-6"
+        >
+          <div className="relative w-96 h-96">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-3xl opacity-20 animate-pulse" />
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+              <div className="text-center space-y-4">
+                <School className="h-24 w-24 text-primary mx-auto" />
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  TechVerse Campus
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-md">
+                  Your Gateway to Academic Excellence
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Access your academic records, course materials, attendance tracking, 
+                  and comprehensive student services in one secure platform.
+                </p>
               </div>
             </div>
-
-            {/* Main Heading */}
-            <h2 className="text-4xl font-bold mb-4 leading-tight text-slate-900">
-              Campus Portal
-              <span className="block text-xl font-normal text-slate-600 mt-2">Your Gateway to Academic Excellence</span>
-            </h2>
-
-            <p className="text-base text-slate-700 mb-8 leading-relaxed max-w-md mx-auto">
-              Access your academic records, course materials, attendance tracking, and comprehensive student services in
-              one secure platform.
-            </p>
-
-            {/* Institution Info */}
-            <div className="pt-8 border-t border-gray-200">
-              <p className="text-slate-600 text-sm leading-relaxed font-medium">
-                Autonomous Institution Affiliated to VTU
-                <br />
-                NAAC {"'A+'"} Grade | NBA Accredited
-              </p>
-            </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Side - White Background */}
-        <div className="flex-1 lg:w-2/5 flex items-center justify-center px-8 sm:px-12 lg:px-16 bg-white">
-          <div className="w-full max-w-md">
-            {/* Mobile Header */}
-            <div className="lg:hidden text-center mb-8">
-              <div className="inline-flex items-center justify-center mb-4">
-                <div className="bg-blue-900 text-white p-3 rounded-xl shadow-lg">
-                  <GraduationCap className="h-8 w-8" />
+        {/* Login Form Side */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full max-w-md mx-auto"
+        >
+          <Card variant="glass" className="backdrop-blur-xl border-white/20 shadow-2xl">
+            <CardHeader className="text-center space-y-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center"
+              >
+                <School className="h-8 w-8 text-primary" />
+              </motion.div>
+              <CardTitle className="text-2xl font-bold">Student Sign In</CardTitle>
+              <CardDescription>
+                Access your student portal securely
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    USN *
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Enter your USN (e.g., ABC23DEF456)"
+                      value={usn}
+                      onChange={(e) => setUsn(e.target.value)}
+                      className="w-full px-3 py-2 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm backdrop-blur-sm"
+                      required
+                    />
+                    <span className="text-xs text-muted-foreground mt-1 block">
+                      Enter your University Seat Number (10 characters)
+                    </span>
+                  </div>
                 </div>
-                <div className="ml-3">
-                  <h1 className="text-2xl font-bold text-slate-900">BMSCE</h1>
-                  <p className="text-slate-600 text-sm">Campus Portal</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Sign In Card - Dark Blue Background */}
-            <Card className="bg-blue-900 border border-blue-800 shadow-xl">
-              <CardContent className="p-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold text-white mb-2">Student Sign In</h2>
-                  <p className="text-blue-100">Access your student portal securely</p>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <Lock className="h-4 w-4" />
+                    Password *
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full px-3 py-2 pr-10 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm backdrop-blur-sm"
+                      required
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
                 </div>
-                <SignInForm />
-              </CardContent>
-            </Card>
 
-            {/* Footer - White Background */}
-            <div className="mt-8 text-center bg-white">
-              <p className="text-sm text-slate-700 font-medium">Protected by institutional security protocols</p>
-              <p className="text-xs text-slate-500 mt-2">
-                &copy; 2025 B.M.S. College of Engineering. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    className="rounded border-border"
+                  />
+                  <label htmlFor="remember" className="text-sm text-muted-foreground">
+                    Remember me
+                  </label>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="h-4 w-4 border-2 border-white border-t-transparent rounded-full"
+                    />
+                  ) : (
+                    "Sign In to Portal"
+                  )}
+                </Button>
+
+                <div className="text-center">
+                  <a href="#" className="text-sm text-primary hover:underline">
+                    Forgot password?
+                  </a>
+                </div>
+
+                <div className="text-center pt-4 border-t border-border/20">
+                  <p className="text-xs text-muted-foreground">
+                    Need help accessing your account?<br />
+                    Contact: portal@techverse.edu
+                  </p>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </div>
-  )
+  );
 }
