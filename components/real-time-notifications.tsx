@@ -136,7 +136,7 @@ export function RealTimeNotifications() {
   }
 
   return (
-    <Card className="fixed top-20 right-6 w-96 max-h-96 overflow-hidden shadow-lg z-50 border">
+    <Card className="fixed top-20 right-6 w-96 max-h-96 overflow-hidden shadow-2xl z-[9999] border backdrop-blur-xl bg-white/98 dark:bg-gray-900/98">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-lg flex items-center">
           <Bell className="h-5 w-5 mr-2" />

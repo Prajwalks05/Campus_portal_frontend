@@ -124,7 +124,7 @@ export default function DashboardPage() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 space-y-8"
+        className="relative space-y-8"
       >
         {/* Enhanced Welcome Section */}
         <motion.div variants={itemVariants}>
