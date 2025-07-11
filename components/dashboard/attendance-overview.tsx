@@ -175,7 +175,7 @@ export function AttendanceOverview() {
       {/* Weekly Overview */}
       <Card>
         <CardHeader>
-          <CardTitle>This Week's Attendance</CardTitle>
+          <CardTitle>This Week&apos;s Attendance</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-5 gap-4">
@@ -345,7 +345,7 @@ export function AttendanceOverview() {
                 <div>
                   <h4 className="font-medium text-blue-800">Weekly Consistency</h4>
                   <p className="text-sm text-blue-700 mt-1">
-                    You've attended 80% of classes this week. Try to maintain regular attendance.
+                    You&apos;ve attended 80% of classes this week. Try to maintain regular attendance.
                   </p>
                 </div>
               </div>

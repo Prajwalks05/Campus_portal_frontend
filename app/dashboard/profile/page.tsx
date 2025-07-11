@@ -390,7 +390,7 @@ export default function ProfilePage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                Father's Information
+                Father&apos;s Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -484,7 +484,7 @@ export default function ProfilePage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                Mother's Information
+                Mother&apos;s Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
