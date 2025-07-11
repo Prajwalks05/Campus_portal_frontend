@@ -1,10 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Bell, X, CheckCircle, CreditCard, GraduationCap } from "lucide-react"
+import { Bell, CheckCircle, CreditCard, GraduationCap } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { toast } from "sonner"
 
 interface Notification {
@@ -40,8 +47,6 @@ export function RealTimeNotifications() {
     },
   ])
 
-  const [isOpen, setIsOpen] = useState(false)
-
   // Simulate real-time notifications
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,7 +69,7 @@ export function RealTimeNotifications() {
         },
       ]
 
-      if (Math.random() > 0.7) {
+      if (Math.random() > 0.8) {
         const randomNotification = randomNotifications[Math.floor(Math.random() * randomNotifications.length)]
         const newNotification: Notification = {
           id: Date.now(),
@@ -79,13 +84,9 @@ export function RealTimeNotifications() {
         // Show toast notification
         toast(randomNotification.message, {
           description: "Click to view details",
-          action: {
-            label: "View",
-            onClick: () => setIsOpen(true),
-          },
         })
       }
-    }, 15000) // Check every 15 seconds
+    }, 20000) // Check every 20 seconds
 
     return () => clearInterval(interval)
   }, [])
@@ -120,64 +121,107 @@ export function RealTimeNotifications() {
     setNotifications((prev) => prev.map((notif) => (notif.id === id ? { ...notif, read: true } : notif)))
   }
 
-  const unreadCount = notifications.filter((n) => !n.read).length
-
-  if (!isOpen) {
-    return (
-      <Button variant="ghost" size="icon" className="relative" onClick={() => setIsOpen(true)}>
-        <Bell className="h-5 w-5" />
-        {unreadCount > 0 && (
-          <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-red-500 animate-pulse">
-            {unreadCount}
-          </Badge>
-        )}
-      </Button>
-    )
+  const markAllAsRead = () => {
+    setNotifications((prev) => prev.map((notif) => ({ ...notif, read: true })))
   }
 
+  const unreadCount = notifications.filter((n) => !n.read).length
+
   return (
-    <Card className="fixed top-20 right-6 w-96 max-h-96 overflow-hidden shadow-lg z-50 border">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg flex items-center">
-          <Bell className="h-5 w-5 mr-2" />
-          Notifications
-          {unreadCount > 0 && <Badge className="ml-2 bg-red-500 text-white">{unreadCount}</Badge>}
-        </CardTitle>
-        <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-          <X className="h-4 w-4" />
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="relative">
+          <Bell className="h-5 w-5" />
+          {unreadCount > 0 && (
+            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-red-500 animate-pulse flex items-center justify-center">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </Badge>
+          )}
         </Button>
-      </CardHeader>
-      <CardContent className="p-0">
+      </DropdownMenuTrigger>
+      <DropdownMenuContent 
+        className="w-80 max-h-96 overflow-hidden z-[9999]" 
+        align="end"
+        side="bottom"
+        sideOffset={5}
+      >
+        <DropdownMenuLabel className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Bell className="h-4 w-4" />
+            Notifications
+            {unreadCount > 0 && (
+              <Badge className="bg-red-500 text-white text-xs">
+                {unreadCount}
+              </Badge>
+            )}
+          </div>
+          {unreadCount > 0 && (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-xs h-6 px-2"
+              onClick={markAllAsRead}
+            >
+              Mark all read
+            </Button>
+          )}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        
         <div className="max-h-80 overflow-y-auto">
           {notifications.length === 0 ? (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">No notifications</div>
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No notifications
+            </div>
           ) : (
-            notifications.map((notification) => (
-              <div
-                key={notification.id}
-                className={`p-4 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer ${
-                  !notification.read ? "bg-blue-50 dark:bg-blue-900/20" : ""
-                }`}
-                onClick={() => markAsRead(notification.id)}
-              >
-                <div className="flex items-start space-x-3">
-                  {getNotificationIcon(notification.type)}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{notification.message}</p>
-                    <div className="flex items-center justify-between mt-1">
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{notification.time}</p>
-                      <Badge variant="secondary" className={`text-xs ${getNotificationColor(notification.type)}`}>
-                        {notification.type}
-                      </Badge>
+            notifications.map((notification, index) => (
+              <div key={notification.id}>
+                <DropdownMenuItem 
+                  className={`p-4 cursor-pointer focus:bg-muted/50 ${
+                    !notification.read ? "bg-blue-50/50 dark:bg-blue-900/10" : ""
+                  }`}
+                  onClick={() => markAsRead(notification.id)}
+                >
+                  <div className="flex items-start space-x-3 w-full">
+                    {getNotificationIcon(notification.type)}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium leading-tight">
+                        {notification.message}
+                      </p>
+                      <div className="flex items-center justify-between mt-2">
+                        <p className="text-xs text-muted-foreground">
+                          {notification.time}
+                        </p>
+                        <Badge 
+                          variant="secondary" 
+                          className={`text-xs ${getNotificationColor(notification.type)}`}
+                        >
+                          {notification.type}
+                        </Badge>
+                      </div>
                     </div>
+                    {!notification.read && (
+                      <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1"></div>
+                    )}
                   </div>
-                  {!notification.read && <div className="w-2 h-2 bg-blue-600 rounded-full"></div>}
-                </div>
+                </DropdownMenuItem>
+                {index < notifications.length - 1 && <DropdownMenuSeparator />}
               </div>
             ))
           )}
         </div>
-      </CardContent>
-    </Card>
+        
+        {notifications.length > 0 && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-center justify-center py-3">
+              <Button variant="ghost" size="sm" className="text-xs">
+                View All Notifications
+              </Button>
+            </DropdownMenuItem>
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
