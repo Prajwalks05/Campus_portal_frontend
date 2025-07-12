@@ -44,7 +44,7 @@ export default function LoginPage() {
               <div className="text-center space-y-4">
                 <School className="h-24 w-24 text-primary mx-auto" />
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  TechVerse Campus
+                  BMSCEWebcampus
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-md">
                   Your Gateway to Academic Excellence
