@@ -1,144 +1,169 @@
-"use client"
+"use client";
 
-import { ForgotPasswordForm } from "@/components/auth/forgot-password-form"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { GraduationCap, ArrowLeft } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { School, User, MailCheck } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function ForgotPasswordPage() {
-  const handleWebsiteClick = () => {
-    window.open("https://www.bmsce.ac.in", "_blank")
-  }
+  const [usn, setUsn] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    const usnPattern = /^[0-9]{1}[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{3}$/;
+    if (!usn || !usnPattern.test(usn.toUpperCase())) {
+      setError("Please enter a valid USN (e.g., 1BM23CS137)");
+      setIsLoading(false);
+      return;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setSubmitted(true);
+    setIsLoading(false);
+  };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-3">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23E2E8F0' fillOpacity='0.3'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: "60px 60px",
-          }}
-        ></div>
-      </div>
-
-      {/* Header - Dark Blue Background */}
-      <header className="relative z-10 w-full px-6 py-5 bg-blue-900 shadow-lg">
-        <div className="flex justify-between items-center max-w-7xl mx-auto">
-          <div className="flex items-center space-x-4">
-            <div className="bg-white text-blue-900 p-2.5 rounded-xl shadow-md">
-              <GraduationCap className="h-7 w-7" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-white">BMSCE CAMPUS</h1>
-              <p className="text-sm text-blue-100 font-medium">Student Portal</p>
-            </div>
-          </div>
-          <Button
-            onClick={handleWebsiteClick}
-            variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-blue-900 bg-transparent font-semibold px-8 py-2 transition-all duration-200"
-          >
-            WEBSITE
-          </Button>
-        </div>
-      </header>
-
-      {/* Main Content - White Background */}
-      <div className="relative flex min-h-[calc(100vh-88px)] bg-white">
-        {/* Left Side - White Background */}
-        <div className="hidden lg:flex lg:w-3/5 flex-col justify-center items-center px-12 xl:px-16 bg-white relative overflow-hidden">
-          {/* Very Subtle Background Elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gray-50 rounded-full -translate-y-48 translate-x-48 opacity-20"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gray-50 rounded-full translate-y-32 -translate-x-32 opacity-20"></div>
-
-          <div className="relative z-10 max-w-xl text-center">
-            {/* Clean White Illustration */}
-            <div className="mb-12">
-              <div className="relative w-full max-w-md mx-auto">
-                <Image
-                  src="/images/clean-white-illustration.png"
-                  alt="Student working on campus portal"
-                  width={400}
-                  height={320}
-                  className="w-full h-auto"
-                  priority
-                />
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
+        {/* Illustration Side */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="hidden lg:flex flex-col items-center justify-center space-y-6"
+        >
+          <div className="relative w-96 h-96">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-3xl opacity-20 animate-pulse" />
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+              <div className="text-center space-y-4">
+                <School className="h-24 w-24 text-primary mx-auto" />
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  BMSCE Webcampus
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-md">
+                  Forgot your password? Reset it here and regain access to your account.
+                </p>
               </div>
             </div>
-
-            {/* Main Heading */}
-            <h2 className="text-4xl font-bold mb-4 leading-tight text-slate-900">
-              Password Recovery
-              <span className="block text-xl font-normal text-slate-600 mt-2">Reset Your Campus Portal Access</span>
-            </h2>
-
-            <p className="text-base text-slate-700 mb-8 leading-relaxed max-w-md mx-auto">
-              Enter your USN to receive password reset instructions via your registered email address.
-            </p>
-
-            {/* Institution Info */}
-            <div className="pt-8 border-t border-gray-200">
-              <p className="text-slate-600 text-sm leading-relaxed font-medium">
-                Autonomous Institution Affiliated to VTU
-                <br />
-                NAAC {"'A+'"} Grade | NBA Accredited
-              </p>
-            </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Side - White Background */}
-        <div className="flex-1 lg:w-2/5 flex items-center justify-center px-8 sm:px-12 lg:px-16 bg-white">
-          <div className="w-full max-w-md">
-            {/* Mobile Header */}
-            <div className="lg:hidden text-center mb-8">
-              <div className="inline-flex items-center justify-center mb-4">
-                <div className="bg-blue-900 text-white p-3 rounded-xl shadow-lg">
-                  <GraduationCap className="h-8 w-8" />
-                </div>
-                <div className="ml-3">
-                  <h1 className="text-2xl font-bold text-slate-900">BMSCE</h1>
-                  <p className="text-slate-600 text-sm">Campus Portal</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Back to Sign In Link */}
-            <div className="mb-6">
-              <Link
-                href="/"
-                className="inline-flex items-center text-blue-900 hover:text-blue-700 font-medium transition-colors"
+        {/* Reset Form Side */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full max-w-md mx-auto"
+        >
+          <Card variant="glass" className="backdrop-blur-xl border-white/20 shadow-2xl">
+            <CardHeader className="text-center space-y-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Sign In
-              </Link>
-            </div>
+                {submitted ? (
+                  <MailCheck className="h-8 w-8 text-green-500" />
+                ) : (
+                  <School className="h-8 w-8 text-primary" />
+                )}
+              </motion.div>
+              <CardTitle className="text-2xl font-bold">
+                {submitted ? "Check Your Email" : "Forgot Password"}
+              </CardTitle>
+              <CardDescription>
+                {submitted
+                  ? `Reset link sent to the email associated with USN: ${usn}`
+                  : "Enter your USN to receive password reset instructions"}
+              </CardDescription>
+            </CardHeader>
 
-            {/* Forgot Password Card - Dark Blue Background */}
-            <Card className="bg-blue-900 border border-blue-800 shadow-xl">
-              <CardContent className="p-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold text-white mb-2">Reset Password</h2>
-                  <p className="text-blue-100">Enter your USN to reset your password</p>
+            <CardContent>
+              {submitted ? (
+                <div className="space-y-4 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    Didn’t receive the email?{" "}
+                    <a href="mailto:campus@bmsce.ac.in" className="text-primary underline">
+                      Contact support
+                    </a>
+                  </p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setUsn("");
+                    }}
+                    className="w-full"
+                  >
+                    Send another reset link
+                  </Button>
                 </div>
-                <ForgotPasswordForm />
-              </CardContent>
-            </Card>
+              ) : (
+                <form onSubmit={handleReset} className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      USN *
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter your USN (e.g., 1BM23CS137)"
+                      value={usn}
+                      onChange={(e) => setUsn(e.target.value.toUpperCase())}
+                      className="w-full px-3 py-2 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm backdrop-blur-sm"
+                      required
+                    />
+                    <span className="text-xs text-muted-foreground mt-1 block">
+                      University Seat Number should be 10 characters.
+                    </span>
+                  </div>
 
-            {/* Footer - White Background */}
-            <div className="mt-8 text-center bg-white">
-              <p className="text-sm text-slate-700 font-medium">Protected by institutional security protocols</p>
-              <p className="text-xs text-slate-500 mt-2">
-                &copy; 2025 B.M.S. College of Engineering. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </div>
+                  {error && (
+                    <p className="text-sm text-red-500 bg-red-100 rounded px-2 py-1">{error}</p>
+                  )}
+
+                  <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? (
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="h-4 w-4 border-2 border-white border-t-transparent rounded-full"
+                      />
+                    ) : (
+                      "Send Reset Instructions"
+                    )}
+                  </Button>
+                  <div className="text-center pt-4 border-t border-border/20">
+                    <p className="text-xs text-muted-foreground">
+                      Remembered your password?{" "}
+                      <a href="/" className="text-primary hover:underline">
+                        Back to Sign In
+                      </a>
+                    </p>
+                  </div>
+                </form>
+              )}
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </div>
-  )
+  );
 }
